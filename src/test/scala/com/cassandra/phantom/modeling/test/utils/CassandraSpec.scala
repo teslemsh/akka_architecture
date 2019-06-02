@@ -1,12 +1,12 @@
 package com.cassandra.phantom.modeling.test.utils
 
-import com.cassandra.phantom.modeling.database.{Database, SongsDatabase}
+import com.cellular.network.modeling.database.{CellularNetworkDatabase, Database}
 import com.outworkers.phantom.database.DatabaseProvider
 import org.scalatest._
 import org.scalatest.concurrent.ScalaFutures
 
-trait SongsDbProvider extends DatabaseProvider[SongsDatabase] {
-  override def database: SongsDatabase = Database
+trait CellularNetworkDbProvider extends DatabaseProvider[CellularNetworkDatabase] {
+  override def database: CellularNetworkDatabase = Database
 }
 
 trait CassandraSpec extends FlatSpec
@@ -15,4 +15,4 @@ trait CassandraSpec extends FlatSpec
   with ScalaFutures
   with OptionValues
   with BeforeAndAfterAll
-  with SongsDbProvider
+  with CellularNetworkDbProvider
