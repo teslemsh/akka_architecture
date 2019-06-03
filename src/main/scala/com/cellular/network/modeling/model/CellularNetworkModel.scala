@@ -9,19 +9,19 @@ abstract class CellularNetworkModel extends Table[CellularNetworkModel, Cellular
   object id extends TimeUUIDColumn with PartitionKey {
     override lazy val name = "integris_id"
   }
-  object Patata extends StringColumn //Presences
-//  object Gm extends StringColumn //Male
-//  object Gf extends StringColumn //Female
-//  object F1 extends StringColumn // Age range < 18
-//  object F2 extends StringColumn // Age range [18, 30]
-//  object F3 extends StringColumn // Age range [31, 40]
-//  object F4 extends StringColumn // Age range [41, 50]
-//  object F5 extends StringColumn // Age range [51, 60]
-//  object F6 extends StringColumn // Age range > 60
-//  object Ni extends StringColumn // Italian
-//  object Ns extends StringColumn // Foreign
-//  object Tb extends StringColumn // Business
-//  object Tc extends StringColumn  //Consumer
+  object presences extends StringColumn//Presences
+  object male extends StringColumn//Male
+  object female extends StringColumn//Female
+  object age_under_18 extends StringColumn// Age range < 18
+  object age_between_18_30 extends StringColumn// Age range [18, 30]
+  object age_between_31_40 extends StringColumn// Age range [18, 30]
+  object age_between_41_50 extends StringColumn// Age range [41, 50]
+  object age_between_51_60 extends StringColumn// Age range [51, 60]
+  object age_older_60 extends StringColumn// Age range > 60
+  object italian extends StringColumn// Italian
+  object foreign extends StringColumn// Foreign
+  object business extends StringColumn// Business
+  object consumer extends StringColumn //Consumer
 
 
   def getCellularNetworkById(id: UUID): Future[Option[CellularNetwork]] = {

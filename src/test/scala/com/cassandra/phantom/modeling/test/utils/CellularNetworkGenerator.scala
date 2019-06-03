@@ -10,19 +10,19 @@ trait CellularNetworkGenerator {
     override def sample: CellularNetwork  = {
       CellularNetwork(
         id = UUIDs.timeBased(),
-        Patata = gen[ShortString].value, //Presences
-//        Gm = gen[ShortString].value, //Male
-//        Gf = gen[ShortString].value, //Female
-//        F1 = gen[ShortString].value, // Age range < 18
-//        F2 = gen[ShortString].value, // Age range [18, 30]
-//        F3 = gen[ShortString].value, // Age range [31, 40]
-//        F4 = gen[ShortString].value, // Age range [41, 50]
-//        F5 = gen[ShortString].value, // Age range [51, 60]
-//        F6 = gen[ShortString].value, // Age range > 60
-//        Ni = gen[ShortString].value, // Italian
-//        Ns = gen[ShortString].value, // Foreign
-//        Tb = gen[ShortString].value, // Business
-//        Tc = gen[ShortString].value //Consumer
+        presences = gen[ShortString].value, //Presences
+        male = gen[ShortString].value, //Male
+        female = gen[ShortString].value, //Female
+        age_under_18 = gen[ShortString].value, // Age range < 18
+        age_between_18_30 = gen[ShortString].value, // Age range [18, 30]
+        age_between_31_40 = gen[ShortString].value, // Age range [18, 30]
+        age_between_41_50 = gen[ShortString].value, // Age range [41, 50]
+        age_between_51_60 = gen[ShortString].value, // Age range [51, 60]
+        age_older_60 = gen[ShortString].value, // Age range > 60
+        italian = gen[ShortString].value, // Italian
+        foreign = gen[ShortString].value, // Foreign
+        business = gen[ShortString].value, // Business
+        consumer = gen[ShortString].value //Consumer
       )
     }
   }

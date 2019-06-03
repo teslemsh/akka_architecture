@@ -8,17 +8,17 @@ import java.util.UUID
   */
 case class CellularNetwork(
                             id: UUID,
-                            Patata: String, //Presences
-//                            Gm: String, //Male
-//                            Gf: String, //Female
-//                            F1: String, // Age range < 18
-//                            F2: String, // Age range [18, 30]
-//                            F3: String, // Age range [31, 40]
-//                            F4: String, // Age range [41, 50]
-//                            F5: String, // Age range [51, 60]
-//                            F6: String, // Age range > 60
-//                            Ni: String, // Italian
-//                            Ns: String, // Foreign
-//                            Tb: String, // Business
-//                            Tc: String, //Consumer
+                            presences: String, //Presences
+                            male: String, //Male
+                            female: String, //Female
+                            age_under_18: String, // Age range < 18
+                            age_between_18_30: String, // Age range [18, 30]
+                            age_between_31_40: String, // Age range [18, 30]
+                            age_between_41_50: String, // Age range [41, 50]
+                            age_between_51_60: String, // Age range [51, 60]
+                            age_older_60: String, // Age range > 60
+                            italian: String, // Italian
+                            foreign: String, // Foreign
+                            business: String, // Business
+                            consumer: String //Consumer
                           )
