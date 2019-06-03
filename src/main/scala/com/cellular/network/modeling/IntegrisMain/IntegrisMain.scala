@@ -3,11 +3,14 @@ import com.cellular.network.modeling.database.Database
 import com.cellular.network.modeling.entity.CellularNetwork
 import scala.concurrent.Future
 import com.datastax.driver.core.utils.UUIDs
-import com.cellular.network.modeling.database.{Database}
+import com.cellular.network.modeling.database.{Database, CellularNetworkDatabase}
+import scala.concurrent.Future
+import com.outworkers.phantom.dsl._
 
 object IntegrisMain {
   def main(args: Array[String]) {
-//    Database.create()
+    val db = new ValueCreator()
+    db.database.create()
     val sample = CellularNetwork(
       id = UUIDs.timeBased(),
       presences = "patata", //Presences
@@ -26,6 +29,7 @@ object IntegrisMain {
     )
     println(sample)
     this.store(sample)
+    return
   }
 
   /**
@@ -44,4 +48,8 @@ object IntegrisMain {
     */
   private def drop(cellular_network: CellularNetwork) = Database.delete(cellular_network)
 
+  trait CellularNetworkDbProvider extends DatabaseProvider[CellularNetworkDatabase] {
+    override def database: CellularNetworkDatabase = Database
+  }
+  class ValueCreator extends CellularNetworkDbProvider {}
 }
