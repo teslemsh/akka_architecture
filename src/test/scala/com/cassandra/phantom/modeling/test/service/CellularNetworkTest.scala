@@ -16,7 +16,8 @@ import scala.concurrent.Future
   * Before executing it will create all necessary tables in our embedded cassandra
   * validating our model with the requirements described in the readme.md file
   */
-class CellularNetworkTest extends CassandraSpec with CellularNetworkGenerator {
+class CellularNetworkTest extends Cassandr
+  override def database: CellularNetworkDatabase = DatabaseaSpec with CellularNetworkGenerator {
 
   override def beforeAll(): Unit = {
     super.beforeAll()

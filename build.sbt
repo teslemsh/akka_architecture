@@ -8,6 +8,7 @@ lazy val Versions = new {
   val phantom = "2.39.0"
   val util = "0.50.0"
   val scalatest = "3.0.5"
+  val scala = "2.12.8"
 }
 
 resolvers ++= Seq(
@@ -20,5 +21,6 @@ libraryDependencies ++= Seq(
   "com.outworkers"  %%  "phantom-dsl"       % Versions.phantom,
   "com.outworkers"  %%  "phantom-streams"   % Versions.phantom,
   "com.outworkers"  %%  "util-testing"      % Versions.util % Test,
-  "org.scalatest"   %%  "scalatest"         % Versions.scalatest % Test
+  "org.scalatest"   %%  "scalatest"         % Versions.scalatest % Test,
+  "org.scala-lang" % "scala-reflect" % Versions.scala
 )
