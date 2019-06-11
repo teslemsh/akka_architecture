@@ -16,7 +16,6 @@ object IntegrisMain {
     var patata = new TelecommunicationsTSVReader(filename)
     patata.readFile()
     
-    
     return
   }
   
