@@ -13,19 +13,14 @@ object IntegrisMain {
     db.database.create()
     val sample = CellularNetwork(
       id = UUIDs.timeBased(),
-      presences = "patata", //Presences
-      male = "patata", //Male
-      female = "patata", //Female
-      age_under_18 = "patata", // Age range < 18
-      age_between_18_30 = "patata", // Age range [18, 30]
-      age_between_31_40 = "patata", // Age range [18, 30]
-      age_between_41_50 = "patata", // Age range [41, 50]
-      age_between_51_60 = "patata", // Age range [51, 60]
-      age_older_60 = "patata", // Age range > 60
-      italian = "patata", // Italian
-      foreign = "patata", // Foreign
-      business = "patata", // Business
-      consumer = "patata" //Consumer
+      square_id = "patata",
+      time_interval = "patata",
+      country_code = "patata",
+      sms_in_activity = "patata",
+      ms_out_activity = "patata",
+      call_in_activity = "patata",
+      call_out_activity= "patata",
+      internet_traffic_activity = "patata"
     )
     println(sample)
     this.store(sample)
