@@ -1,4 +1,4 @@
-name := "cassandra-phantom"
+name := "cellular-network-processing"
 
 version := "1.0"
 
@@ -9,8 +9,10 @@ lazy val Versions = new {
   val util = "0.50.0"
   val scalatest = "3.0.5"
   val scala = "2.12.8"
+  val akkaVersion = "2.6.0-M2"
+  
+  
 }
-
 resolvers ++= Seq(
   Resolver.sonatypeRepo("releases"),
   Resolver.typesafeRepo("releases"),
@@ -22,5 +24,7 @@ libraryDependencies ++= Seq(
   "com.outworkers"  %%  "phantom-streams"   % Versions.phantom,
   "com.outworkers"  %%  "util-testing"      % Versions.util % Test,
   "org.scalatest"   %%  "scalatest"         % Versions.scalatest % Test,
-  "org.scala-lang" % "scala-reflect" % Versions.scala
+  "org.scala-lang"  % "scala-reflect"        % Versions.scala,
+  "com.typesafe.akka" %% "akka-actor"       % Versions.akkaVersion,
+  "com.typesafe.akka" %% "akka-testkit"     % Versions.akkaVersion
 )
