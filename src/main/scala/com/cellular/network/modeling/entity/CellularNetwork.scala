@@ -8,12 +8,12 @@ import java.util.UUID
   */
 case class CellularNetwork(
                             id: UUID,
-                            square_id: String,
-                            time_interval: String,
-                            country_code: String,
-                            sms_in_activity: String,
-                            ms_out_activity: String,
-                            call_in_activity: String,
-                            call_out_activity: String,
-                            internet_traffic_activity: String
+                            square_id: Int,
+                            time_interval: Long,
+                            country_code: Int,
+                            sms_in_activity: Float,
+                            ms_out_activity: Float,
+                            call_in_activity: Float,
+                            call_out_activity: Float,
+                            internet_traffic_activity: Float
                           )

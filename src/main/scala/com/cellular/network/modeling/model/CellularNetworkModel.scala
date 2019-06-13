@@ -9,14 +9,14 @@ abstract class CellularNetworkModel extends Table[CellularNetworkModel, Cellular
   object id extends TimeUUIDColumn with PartitionKey {
     override lazy val name = "integris_id"
   }
-  object square_id extends StringColumn
-  object time_interval extends StringColumn
-  object country_code extends StringColumn
-  object sms_in_activity extends StringColumn
-  object ms_out_activity extends StringColumn
-  object call_in_activity extends StringColumn
-  object call_out_activity extends StringColumn
-  object internet_traffic_activity extends StringColumn
+  object square_id extends IntColumn
+  object time_interval extends LongColumn
+  object country_code extends IntColumn
+  object sms_in_activity extends FloatColumn
+  object ms_out_activity extends FloatColumn
+  object call_in_activity extends FloatColumn
+  object call_out_activity extends FloatColumn
+  object internet_traffic_activity extends FloatColumn
   
   
   

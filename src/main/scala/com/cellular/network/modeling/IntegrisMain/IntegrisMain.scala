@@ -47,17 +47,24 @@ object IntegrisMain {
         var values = line.stripLineEnd.split("\t", -1)
         var sample = CellularNetwork(
           id = UUIDs.timeBased(),
-          square_id = values(0),
-          time_interval = values(1),
-          country_code = values(2),
-          sms_in_activity = values(3),
-          ms_out_activity = values(4),
-          call_in_activity = values(5),
-          call_out_activity= values(6),
-          internet_traffic_activity = values(7)
+          square_id = this.parseToInt(values(0)),
+          time_interval = this.parseToLong(values(1)),
+          country_code = this.parseToInt(values(2)),
+          sms_in_activity = this.parseToFloat(values(3)),
+          ms_out_activity = this.parseToFloat(values(4)),
+          call_in_activity = this.parseToFloat(values(5)),
+          call_out_activity= this.parseToFloat(values(6)),
+          internet_traffic_activity =this.parseToFloat(values(7))
         )
         this.store(sample)
       }
     }
+    
+    def parseToLong(value: String): Long = if(value.nonEmpty) value.toLong else 0
+    
+    def parseToInt(value:String):Int = if(value.nonEmpty) value.toInt else 0
+    
+    def parseToFloat(value:String):Float = if(value.nonEmpty) value.toFloat else 0
+  
   }
 }
