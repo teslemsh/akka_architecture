@@ -1,17 +1,25 @@
 package com.cellular.network.modeling.model
 import com.cellular.network.modeling.entity.CellularNetwork
+
 import com.outworkers.phantom.dsl._
+
 import scala.concurrent.Future
 
 abstract class CellularNetworkModel extends Table[CellularNetworkModel, CellularNetwork] {
   override def tableName: String = "integris"
 
-  object id extends TimeUUIDColumn with PartitionKey {
-    override lazy val name = "integris_id"
+  object id extends TimeUUIDColumn with PrimaryKey {
+    override lazy val name = "id"
   }
-  object square_id extends IntColumn
-  object time_interval extends LongColumn
-  object country_code extends IntColumn
+  object square_id extends IntColumn with PartitionKey {
+    override lazy val name = "square_id"
+  }
+  object time_interval extends LongColumn with PrimaryKey {
+    override lazy val name = "time_interval"
+  }
+  object country_code extends IntColumn with PartitionKey {
+    override lazy val name = "country_code"
+  }
   object sms_in_activity extends FloatColumn
   object ms_out_activity extends FloatColumn
   object call_in_activity extends FloatColumn
@@ -20,19 +28,18 @@ abstract class CellularNetworkModel extends Table[CellularNetworkModel, Cellular
   
   
   
-  def getCellularNetworkById(id: UUID): Future[Option[CellularNetwork]] = {
+  def getCellularNetworkById(square_id: Int, country_code: Int): Future[List[CellularNetwork]] = {
     select
-      .where(_.id eqs id)
-      .consistencyLevel_=(ConsistencyLevel.ONE)
-      .one()
+      .where(_.square_id eqs square_id).and (_.country_code eqs country_code)
+      .fetch()
   }
 
-  def deleteById(id: UUID): Future[ResultSet] = {
-    delete
-      .where(_.id eqs id)
-      .consistencyLevel_=(ConsistencyLevel.ONE)
-      .future()
-  }
+//  def deleteById(id: UUID): Future[ResultSet] = {
+//    delete
+//      .where(_.id eqs id)
+//      .consistencyLevel_=(ConsistencyLevel.ONE)
+//      .future()
+//  }
 
 }
 
