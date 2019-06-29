@@ -7,11 +7,9 @@ import com.cellular.network.modeling.database.{Database, CellularNetworkDatabase
 import scala.concurrent.Future
 import com.outworkers.phantom.dsl._
 import scala.io.Source
-import java.time.{Instant, ZoneId, ZonedDateTime}
-import java.time.format.{ DateTimeFormatter, DateTimeParseException }
-import org.joda.time.format.DateTimeFormat
 import  org.joda.time.DateTime
 import  org.joda.time.DateTimeZone
+import scala.collection.mutable.Map
 
 object IntegrisMain {
   def main(args: Array[String]) {
@@ -48,7 +46,11 @@ object IntegrisMain {
     private def drop(cellular_network: CellularNetwork) = Database.delete(cellular_network)
     
     def readFile() = {
+      val countriesData = this.readCountriesCode("src/main/scala/com/cellular/network/modeling/IntegrisMain/countries_phone_code.csv")
+      var country_name = ""
+      
       println("starting reading file", fileName)
+      
       for (line <- Source.fromFile(fileName, "UTF8").getLines()) {
         var values = line.stripLineEnd.split("\t", -1)
         var cellularNetwork = CellularNetwork(
@@ -56,11 +58,12 @@ object IntegrisMain {
           square_id = this.parseToInt(values(0)),
           time_interval = new DateTime(this.parseToLong(values(1)), DateTimeZone.UTC),// 1970-06-14T18:17:33.511Z
           country_code = this.parseToInt(values(2)),
+          country_name = countriesData.getOrElse(values(2), "No such state"),
           sms_in_activity = this.parseToFloat(values(3)),
           ms_out_activity = this.parseToFloat(values(4)),
           call_in_activity = this.parseToFloat(values(5)),
           call_out_activity= this.parseToFloat(values(6)),
-          internet_traffic_activity =this.parseToFloat(values(7))
+          internet_traffic_activity = this.parseToFloat(values(7))
         )
         // Stores every entity into cassandra
         this.store(cellularNetwork)
@@ -68,6 +71,18 @@ object IntegrisMain {
       println("Ingestion completed")
     }
     
+    def readCountriesCode(file: String): Map[String,String] = {
+      println("starting countries file", file)
+      val map = scala.collection.mutable.Map[String,String]()
+      for (line <- Source.fromFile(file, "UTF8").getLines()) {
+        var cols = line.stripLineEnd.split(",")
+        var country_code = cols(1)
+        var country_name = cols(0)
+        map += country_code -> country_name
+      }
+      println("Countries data readed")
+      return map
+    }
     
     def parseToLong(value: String): Long = if(value.nonEmpty) value.toLong else 0
     

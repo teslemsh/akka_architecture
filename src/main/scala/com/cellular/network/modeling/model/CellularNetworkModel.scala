@@ -19,6 +19,7 @@ abstract class CellularNetworkModel extends Table[CellularNetworkModel, Cellular
   object country_code extends IntColumn with PartitionKey {
     override lazy val name = "country_code"
   }
+  object country_name extends StringColumn
   object sms_in_activity extends FloatColumn
   object ms_out_activity extends FloatColumn
   object call_in_activity extends FloatColumn

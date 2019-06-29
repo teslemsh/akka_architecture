@@ -26,5 +26,6 @@ libraryDependencies ++= Seq(
   "org.scalatest"   %%  "scalatest"         % Versions.scalatest % Test,
   "org.scala-lang"  % "scala-reflect"        % Versions.scala,
   "com.typesafe.akka" %% "akka-actor"       % Versions.akkaVersion,
-  "com.typesafe.akka" %% "akka-testkit"     % Versions.akkaVersion
+  "com.typesafe.akka" %% "akka-testkit"     % Versions.akkaVersion,
+  "com.typesafe.play" %% "play-json" % "2.7.3"
 )

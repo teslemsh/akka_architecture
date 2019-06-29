@@ -11,6 +11,7 @@ case class CellularNetwork(
                             square_id: Int,
                             time_interval: DateTime,
                             country_code: Int,
+                            country_name: String,
                             sms_in_activity: Float,
                             ms_out_activity: Float,
                             call_in_activity: Float,
