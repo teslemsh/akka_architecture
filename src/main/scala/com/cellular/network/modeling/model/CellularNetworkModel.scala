@@ -1,6 +1,5 @@
 package com.cellular.network.modeling.model
 import com.cellular.network.modeling.entity.CellularNetwork
-
 import com.outworkers.phantom.dsl._
 
 import scala.concurrent.Future
@@ -14,7 +13,7 @@ abstract class CellularNetworkModel extends Table[CellularNetworkModel, Cellular
   object square_id extends IntColumn with PartitionKey {
     override lazy val name = "square_id"
   }
-  object time_interval extends LongColumn with PrimaryKey {
+  object time_interval extends DateTimeColumn with PrimaryKey {
     override lazy val name = "time_interval"
   }
   object country_code extends IntColumn with PartitionKey {

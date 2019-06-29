@@ -1,5 +1,5 @@
 package com.cellular.network.modeling.entity
-
+import  org.joda.time.DateTime
 import java.util.UUID
 
 /**
@@ -9,7 +9,7 @@ import java.util.UUID
 case class CellularNetwork(
                             id: UUID,
                             square_id: Int,
-                            time_interval: Long,
+                            time_interval: DateTime,
                             country_code: Int,
                             sms_in_activity: Float,
                             ms_out_activity: Float,
