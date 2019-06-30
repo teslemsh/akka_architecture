@@ -27,5 +27,6 @@ libraryDependencies ++= Seq(
   "org.scala-lang"  % "scala-reflect"        % Versions.scala,
   "com.typesafe.akka" %% "akka-actor"       % Versions.akkaVersion,
   "com.typesafe.akka" %% "akka-testkit"     % Versions.akkaVersion,
-  "com.typesafe.play" %% "play-json" % "2.7.3"
+  "com.typesafe.play" %% "play-json" % "2.7.3",
+  "net.liftweb" %% "lift-json" % "3.3.0"
 )

@@ -10,13 +10,13 @@ abstract class CellularNetworkModel extends Table[CellularNetworkModel, Cellular
   object id extends TimeUUIDColumn with PrimaryKey {
     override lazy val name = "id"
   }
-  object square_id extends IntColumn with PartitionKey {
+  object square_id extends IntColumn {
     override lazy val name = "square_id"
   }
-  object time_interval extends DateTimeColumn with PrimaryKey {
+  object time_interval extends DateTimeColumn with PartitionKey {
     override lazy val name = "time_interval"
   }
-  object country_code extends IntColumn with PartitionKey {
+  object country_code extends IntColumn {
     override lazy val name = "country_code"
   }
   object country_name extends StringColumn
@@ -28,9 +28,9 @@ abstract class CellularNetworkModel extends Table[CellularNetworkModel, Cellular
   
   
   
-  def getCellularNetworkById(square_id: Int, country_code: Int): Future[List[CellularNetwork]] = {
+  def getCellularNetworkById(time_interval: DateTime): Future[List[CellularNetwork]] = {
     select
-      .where(_.square_id eqs square_id).and (_.country_code eqs country_code)
+      .where(_.time_interval eqs time_interval)
       .fetch()
   }
 

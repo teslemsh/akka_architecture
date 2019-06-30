@@ -43,8 +43,9 @@ object IntegrisMain {
       * @param cellular_network the cellular_network to be deleted
       * @return a [[Future]] of [[ResultSet]]
       */
-    private def drop(cellular_network: CellularNetwork) = Database.delete(cellular_network)
+//    private def drop(cellular_network: CellularNetwork) = Database.delete(cellular_network)
     
+
     def readFile() = {
       val countriesData = this.readCountriesCode("src/main/scala/com/cellular/network/modeling/IntegrisMain/countries_phone_code.csv")
       var country_name = ""

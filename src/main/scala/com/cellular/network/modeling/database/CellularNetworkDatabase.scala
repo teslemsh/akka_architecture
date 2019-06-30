@@ -33,11 +33,11 @@ class CellularNetworkDatabase(override val connector: CassandraConnection) exten
     * @param cellular_network
     * @return
     */
-  def delete(cellular_network: CellularNetwork): Future[ResultSet] = {
-    Batch.logged
-      .add(CellularNetworkModel.delete.where(_.square_id eqs cellular_network.square_id))
-      .future()
-  }
+//  def delete(cellular_network: CellularNetwork): Future[ResultSet] = {
+//    Batch.logged
+//      .add(CellularNetworkModel.delete.where(_.square_id eqs cellular_network.square_id))
+//      .future()
+//  }
 }
 
 /**
