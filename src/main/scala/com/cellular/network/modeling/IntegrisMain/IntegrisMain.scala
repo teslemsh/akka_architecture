@@ -47,7 +47,7 @@ class IngestDataActor(precessDataActor: ActorRef) extends Actor with ActorLoggin
       telecommunicationsTSVReader.ingestDataFromFile()
       
       // Call to process data actor.
-      precessDataActor ! "start process data"
+      precessDataActor ! "start to process data"
   
     }
     case _  => log.info("Greeting received (from " + sender() + "):" + "patata")
