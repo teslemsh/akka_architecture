@@ -18,11 +18,11 @@ trait CellularNetworkDbProvider extends DatabaseProvider[CellularNetworkDatabase
 }
 class CellularNetworkDbCreator extends CellularNetworkDbProvider {}
 
-class HelloActor extends Actor with ActorLogging {
+class ProcessDataActor extends Actor with ActorLogging {
   val db = new CellularNetworkDbCreator()
   def receive = {
-    case "getCellularNetworkByTimeInterval" => {
-      log.info("Greeting received (from " + sender() + "):")
+    case "start process data" => {
+      log.info("Greeting received (from " + sender() + "): start process data")
       
       val dateFormatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss.SSS").withZone(DateTimeZone.UTC)
       var start_date = dateFormatter.parseDateTime("2013-12-30 11:40:00.000")
@@ -46,11 +46,11 @@ class HelloActor extends Actor with ActorLogging {
   }
 }
 
-object Main extends App {
-  val system = ActorSystem("HelloSystem")
-  // default Actor constructor
-  val helloActor = system.actorOf(Props[HelloActor], name = "helloactor")
-  helloActor ! "getCellularNetworkByTimeInterval"
-  helloActor ! "buenos dias"
-  
-}
+//object Main extends App {
+//  val system = ActorSystem("HelloSystem")
+//  // default Actor constructor
+//  val helloActor = system.actorOf(Props[HelloActor], name = "helloactor")
+//  helloActor ! "getCellularNetworkByTimeInterval"
+//  helloActor ! "buenos dias"
+//
+//}

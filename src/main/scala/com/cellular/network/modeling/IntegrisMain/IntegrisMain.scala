@@ -1,6 +1,5 @@
 package com.cellular.network.modeling.IntegrisMain
-import com.cellular.network.modeling.database.Database
-import com.cellular.network.modeling.entity.CellularNetwork
+
 import scala.concurrent.Future
 import com.datastax.driver.core.utils.UUIDs
 import com.cellular.network.modeling.database.{Database, CellularNetworkDatabase}
@@ -11,6 +10,10 @@ import  org.joda.time.DateTime
 import  org.joda.time.DateTimeZone
 import scala.collection.mutable.Map
 import akka.actor.{ Actor, ActorLogging, ActorRef, ActorSystem, Props }
+
+import com.cellular.network.modeling.database.Database
+import com.cellular.network.modeling.entity.CellularNetwork
+import com.cellular.network.processing.ProcessDataActor
 
 trait CellularNetworkDbProvider extends DatabaseProvider[CellularNetworkDatabase] {
   override def database: CellularNetworkDatabase = Database
@@ -23,15 +26,18 @@ object IntegrisMain {
     db.database.create()
     
     val system = ActorSystem("ActorSystem")
-    val ingestDataActor = system.actorOf(Props[IngestDataActor], name = "IngestDataActor")
+    val processDataActor = system.actorOf(Props[ProcessDataActor], name = "processDataActor")
+    val ingestDataActor = system.actorOf(Props(new IngestDataActor(processDataActor)), name = "IngestDataActor")
   
+  
+    // Call to ingest data actor
     ingestDataActor ! "ingest data"
     
     return
   }
 }
 
-class IngestDataActor extends Actor with ActorLogging {
+class IngestDataActor(precessDataActor: ActorRef) extends Actor with ActorLogging {
   def receive = {
     case "ingest data" => {
       log.info("Message received (from " + sender() + "): ingest data")
@@ -39,6 +45,9 @@ class IngestDataActor extends Actor with ActorLogging {
       val filename = "src/main/scala/com/cellular/network/modeling/IntegrisMain/sms-call-internet-tn-2013-12-30.txt"
       var telecommunicationsTSVReader = new TelecommunicationsTSVReader(filename)
       telecommunicationsTSVReader.ingestDataFromFile()
+      
+      // Call to process data actor.
+      precessDataActor ! "start process data"
   
     }
     case _  => log.info("Greeting received (from " + sender() + "):" + "patata")
