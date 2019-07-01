@@ -12,16 +12,20 @@ import  org.joda.time.DateTimeZone
 import scala.collection.mutable.Map
 import akka.actor.{ Actor, ActorLogging, ActorRef, ActorSystem, Props }
 
+trait CellularNetworkDbProvider extends DatabaseProvider[CellularNetworkDatabase] {
+  override def database: CellularNetworkDatabase = Database
+}
+class CellularNetworkDbCreator extends CellularNetworkDbProvider {}
+
 object IntegrisMain {
   def main(args: Array[String]) {
     val db = new CellularNetworkDbCreator()
     db.database.create()
     
-    val system = ActorSystem("HelloSystem")
-    val systemActor = system.actorOf(Props[IngestDataActor], name = "IngestDataActor")
-    
-    systemActor ! "ingest data"
-    systemActor ! "buenos dias"
+    val system = ActorSystem("ActorSystem")
+    val ingestDataActor = system.actorOf(Props[IngestDataActor], name = "IngestDataActor")
+  
+    ingestDataActor ! "ingest data"
     
     return
   }
@@ -30,21 +34,16 @@ object IntegrisMain {
 class IngestDataActor extends Actor with ActorLogging {
   def receive = {
     case "ingest data" => {
-      log.info("Greeting received (from " + sender() + "): ingest data")
+      log.info("Message received (from " + sender() + "): ingest data")
       
       val filename = "src/main/scala/com/cellular/network/modeling/IntegrisMain/sms-call-internet-tn-2013-12-30.txt"
       var telecommunicationsTSVReader = new TelecommunicationsTSVReader(filename)
-      telecommunicationsTSVReader.readFile()
+      telecommunicationsTSVReader.ingestDataFromFile()
   
     }
     case _  => log.info("Greeting received (from " + sender() + "):" + "patata")
   }
 }
-
-trait CellularNetworkDbProvider extends DatabaseProvider[CellularNetworkDatabase] {
-  override def database: CellularNetworkDatabase = Database
-}
-class CellularNetworkDbCreator extends CellularNetworkDbProvider {}
 
 class TelecommunicationsTSVReader(val fileName: String) {
   /**
@@ -64,9 +63,9 @@ class TelecommunicationsTSVReader(val fileName: String) {
   //    private def drop(cellular_network: CellularNetwork) = Database.delete(cellular_network)
   
   
-  def readFile() = {
-    val countriesData = this.readCountriesCode("src/main/scala/com/cellular/network/modeling/IntegrisMain/countries_phone_code.csv")
-    var country_name = ""
+  def ingestDataFromFile() = {
+    val countriesFileName = "src/main/scala/com/cellular/network/modeling/IntegrisMain/countries_phone_code.csv"
+    val countriesData = this.getCountriesCodeAndName(countriesFileName)
     
     println("starting reading file", fileName)
     
@@ -77,7 +76,7 @@ class TelecommunicationsTSVReader(val fileName: String) {
         square_id = this.parseToInt(values(0)),
         time_interval = new DateTime(this.parseToLong(values(1)), DateTimeZone.UTC),// 1970-06-14T18:17:33.511Z
         country_code = this.parseToInt(values(2)),
-        country_name = countriesData.getOrElse(values(2), "No such state"),
+        country_name = countriesData.getOrElse(values(2), "No such country"),
         sms_in_activity = this.parseToFloat(values(3)),
         ms_out_activity = this.parseToFloat(values(4)),
         call_in_activity = this.parseToFloat(values(5)),
@@ -90,9 +89,11 @@ class TelecommunicationsTSVReader(val fileName: String) {
     println("Ingestion completed")
   }
   
-  def readCountriesCode(file: String): Map[String,String] = {
+  def getCountriesCodeAndName(file: String): Map[String,String] = {
     println("starting countries file", file)
+    
     val map = scala.collection.mutable.Map[String,String]()
+    
     for (line <- Source.fromFile(file, "UTF8").getLines()) {
       var cols = line.stripLineEnd.split(",")
       var country_code = cols(1)
