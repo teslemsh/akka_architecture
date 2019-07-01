@@ -28,7 +28,7 @@ abstract class CellularNetworkModel extends Table[CellularNetworkModel, Cellular
   
   
   
-  def getCellularNetworkById(time_interval: DateTime): Future[List[CellularNetwork]] = {
+  def getCellularNetworkByTimeInterval(time_interval: DateTime): Future[List[CellularNetwork]] = {
     select
       .where(_.time_interval eqs time_interval)
       .fetch()

@@ -22,16 +22,18 @@ class CellularNetworkDbCreator extends CellularNetworkDbProvider {}
 class HelloActor extends Actor with ActorLogging {
   val db = new CellularNetworkDbCreator()
   def receive = {
-    case "hello" => {
+    case "getCellularNetworkByTimeInterval" => {
+      log.info("Greeting received (from " + sender() + "):")
+      
       val dateFormatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss.SSS").withZone(DateTimeZone.UTC)
       var start_date = dateFormatter.parseDateTime("2013-12-30 11:40:00.000")
       var end_date = dateFormatter.parseDateTime("2013-12-30 11:40:00.000")
       
-      var carlota = Await.result(db.database.CellularNetworkModel.getCellularNetworkById(start_date), 10.seconds)
-      log.info("Greeting received (from " + sender() + "):")
+      var cellularNetworkActivityByTimeInterval = Await.result(db.database.CellularNetworkModel.getCellularNetworkByTimeInterval(start_date), 10.seconds)
+      
       val w: Writer = new FileWriter("patata.json")
       implicit val formats = DefaultFormats
-      val jsonString = write(carlota)
+      val jsonString = write(cellularNetworkActivityByTimeInterval)
 
       println(jsonString)
       try {
@@ -49,7 +51,7 @@ object Main extends App {
   val system = ActorSystem("HelloSystem")
   // default Actor constructor
   val helloActor = system.actorOf(Props[HelloActor], name = "helloactor")
-  helloActor ! "hello"
+  helloActor ! "getCellularNetworkByTimeInterval"
   helloActor ! "buenos dias"
   
 }
