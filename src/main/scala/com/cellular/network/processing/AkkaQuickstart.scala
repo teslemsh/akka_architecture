@@ -1,4 +1,3 @@
-//#full-example
 package com.cellular.network.processing
 
 import akka.actor.{ Actor, ActorLogging, ActorRef, ActorSystem, Props }

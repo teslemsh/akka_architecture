@@ -1,7 +1,7 @@
 package com.cellular.network.modeling.model
 import com.cellular.network.modeling.entity.CellularNetwork
 import com.outworkers.phantom.dsl._
-
+import akka.actor.{ Actor, ActorLogging, ActorRef, ActorSystem, Props }
 import scala.concurrent.Future
 
 abstract class CellularNetworkModel extends Table[CellularNetworkModel, CellularNetwork] {
