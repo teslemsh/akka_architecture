@@ -10,7 +10,8 @@ lazy val Versions = new {
   val scalatest = "3.0.5"
   val scala = "2.12.8"
   val akkaVersion = "2.6.0-M2"
-  
+  val playJson = "2.7.3"
+  val liftJson = "3.3.0"
   
 }
 resolvers ++= Seq(
@@ -27,6 +28,8 @@ libraryDependencies ++= Seq(
   "org.scala-lang"  % "scala-reflect"        % Versions.scala,
   "com.typesafe.akka" %% "akka-actor"       % Versions.akkaVersion,
   "com.typesafe.akka" %% "akka-testkit"     % Versions.akkaVersion,
-  "com.typesafe.play" %% "play-json" % "2.7.3",
-  "net.liftweb" %% "lift-json" % "3.3.0"
+  "com.typesafe.play" %% "play-json"        % Versions.playJson,
+  "net.liftweb" %% "lift-json"              % Versions.liftJson
 )
+
+mainClass in Compile := Some("com.cellular.network.modeling.IntegrisMain")

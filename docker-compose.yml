@@ -1,6 +1,10 @@
 version: '2'
 
 services:
+  app:
+    build: ./
+    volumes:
+      - ./:/app/
   cassandra:
     image: 'bitnami/cassandra:3'
     ports:
