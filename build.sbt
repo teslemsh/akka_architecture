@@ -31,5 +31,3 @@ libraryDependencies ++= Seq(
   "com.typesafe.play" %% "play-json"        % Versions.playJson,
   "net.liftweb" %% "lift-json"              % Versions.liftJson
 )
-
-mainClass in Compile := Some("com.cellular.network.modeling.IntegrisMain")
